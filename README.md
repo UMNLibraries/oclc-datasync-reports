@@ -1,5 +1,13 @@
 # oclc-datasync
-OCLC Datasync processing scripts
+OCLC Datasync processing scripts. These scripts take as input the 3 report files generated
+by an OCLC Datasync job: *xrefrpt.txt, *unresxrefrpt.txt, and *bibdetailexcpt.txt. Outputs
+are files to be used for either batch or manual processing of Datasync results in Alma.
+
+## dataysnc_xref.py
+This script creates two files from the OCLC Datasync report file *xrefrept.txt:
+1)a .txt. file of Alma MMS IDS formatted for input to Alma's set creation job; 
+2) a file of brief MARC records from the OCLC Datasync report file *xrefrept.txt 
+to be used as input for Alma import profile Add 035 (OCoLC)* numbers to existing records.
 
 ## datasync_unres.py
 This script produces an .xlsx file and a .txt file for each of the 5 University of Minnesota

@@ -6,6 +6,10 @@ __pycache__/
 # metacoll reports
 metacoll*.txt
 
+# marc files
+*.mrc
+*.mrk
+
 # C extensions
 *.so
 

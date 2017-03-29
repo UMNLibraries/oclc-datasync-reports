@@ -18,8 +18,8 @@ def excpt_rpt_parse(excptfile):
         bibexcpt = line.split('\t')
         bibexcpt_parsed.append(bibexcpt)
 
-    script_errors=[['Alma OCN', 'Staging OCN', 'MMS ID', 'Exception Count', 'Exception Description', 'Severity']]
-    other_errors=[['Alma OCN', 'Staging OCN', 'MMS ID', 'Exception Count', 'Exception Description', 'Severity']]
+    script_errors = [['Alma OCN', 'Staging OCN', 'MMS ID', 'Exception Count', 'Exception Description', 'Severity']]
+    other_errors = script_errors
 
     for line in bibexcpt_parsed:
         if re.search(r'^.*\s880(\s|\.).*$', str(line)) is None and re.search(r'^.*\$6.*$', str(line)) is None:

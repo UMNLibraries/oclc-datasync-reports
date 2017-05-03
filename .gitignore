@@ -10,6 +10,11 @@ metacoll*.txt
 *.mrc
 *.mrk
 
+# Excel and csv files
+*.xls
+*.xlsx
+*.csv
+
 # C extensions
 *.so
 

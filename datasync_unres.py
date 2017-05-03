@@ -11,7 +11,7 @@ import re
 import os
 import petl as etl
 from datetime import date
-#also requires openpyxl
+#also requires openpyxl, xlrd, xlwt
 
 def unresrept_parse(unresfile):
     f = open(unresfile, 'r')
@@ -37,7 +37,8 @@ def xref_symbol_reports():
         
         symbol_split = re.split('^.*processing.(M[A-Z]{2}).*$', report)
         symbol = symbol_split[1]
-        excel_outfile = symbol + '_datasync_unresolved_' + today + '.xlsx'
+        xlsx_outfile = symbol + '_datasync_unresolved_' + today + '.xlsx'
+        xls_outfile = symbol + '_datasync_unresolved_' + today + '.xls'
         txt_outfile = symbol + '_staging_OCNs_' + today + '.txt'
         
         symbol_table_raw = etl.fromcsv(report, encoding='utf-8')
@@ -51,7 +52,11 @@ def xref_symbol_reports():
         
         
         symbol_xref_table = etl.join(symbol_table_sorted, xref_table_sorted, presorted=True, lkey="MMS ID", rkey="MMS ID")
-        etl.toxlsx(symbol_xref_table, excel_outfile, encoding='utf-8')
+        etl.tocsv(symbol_xref_table, csv_outfile, encoding='utf-8')
+        try:
+            etl.toxlsx(symbol_xref_table, xlsx_outfile, encoding='utf-8')
+        except TypeError:
+            etl.toxls(symbol_xref_table, xls_outfile, 'Sheet1', encoding='utf-8')
         
         staging_ocns_table = etl.cut(symbol_xref_table, 'Staging OCN')
         template = '{Staging OCN}\n'

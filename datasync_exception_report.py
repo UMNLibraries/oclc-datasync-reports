@@ -19,13 +19,15 @@ def excpt_rpt_parse(excptfile):
         bibexcpt_parsed.append(bibexcpt)
 
     script_errors = [['Alma OCN', 'Staging OCN', 'MMS ID', 'Exception Count', 'Exception Description', 'Severity']]
-    other_errors = script_errors
+    other_errors = [['Alma OCN', 'Staging OCN', 'MMS ID', 'Exception Count', 'Exception Description', 'Severity']]
 
     for line in bibexcpt_parsed:
-        if re.search(r'^.*\s880(\s|\.).*$', str(line)) is None and re.search(r'^.*\$6.*$', str(line)) is None:
-            other_errors.append(line)
-        else:
+        if re.match('^.*\s880(\s|\.).*$', str(line)) is not None:
             script_errors.append(line)
+        elif re.match('^.*\$6.*$', str(line)) is not None:
+            script_errors.append(line)
+        else:
+            other_errors.append(line)
 
     today = str(date.today())
     wb = Workbook()

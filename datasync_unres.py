@@ -52,7 +52,7 @@ def xref_symbol_reports():
         
         
         symbol_xref_table = etl.join(symbol_table_sorted, xref_table_sorted, presorted=True, lkey="MMS ID", rkey="MMS ID")
-        etl.tocsv(symbol_xref_table, csv_outfile, encoding='utf-8')
+        
         try:
             etl.toxlsx(symbol_xref_table, xlsx_outfile, encoding='utf-8')
         except TypeError:

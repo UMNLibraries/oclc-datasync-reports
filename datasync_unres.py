@@ -2,8 +2,10 @@
 This script produces an .xlsx file and a .txt file for each of the 5 University of Minnesota
 OCLC symbols (MNU, MLL, MND, MNX, MCR. Files are to be used for manual processing of records 
 returned as unresolved by OCLC Datasync. Inputs required: OCLC Datasync unresolved 
-cross-ref report, One .csv file persymbol from Alma Analytics (e.g. 'OCLC Datasync 
-Unresolved processing MNU').
+cross-ref report, One .csv file per symbol from Alma Analytics (e.g. 'OCLC Datasync 
+Unresolved processing MNU'). NOTE: At present, the .csv files must be created within the Alma 
+Analytics UI and manually downloaded to the working directory; an additional script is in 
+development that will pull the Alma Analytics data via API.
 '''
 
 import csv
@@ -12,6 +14,7 @@ import os
 import petl as etl
 from datetime import date
 #also requires openpyxl, xlrd, xlwt
+
 
 def unresrept_parse(unresfile):
     f = open(unresfile, 'r')
@@ -27,6 +30,7 @@ def unresrept_parse(unresfile):
     with open('unresxref.csv', 'w', newline='') as out:
               writer = csv.writer(out)
               writer.writerows(unres_parsed)    
+
 
 def xref_symbol_reports():
     symbol_reports = [f for f in os.listdir() if re.match('OCLC Datasync Unresolved.*\.csv', f)]
@@ -62,8 +66,13 @@ def xref_symbol_reports():
         template = '{Staging OCN}\n'
         etl.totext(staging_ocns_table, txt_outfile, template=template)
 
+
 def main():
-    unresfile = input('Full unresxrefrpt filename: ')
+    oclc_report_files = [f for f in os.listdir() if re.match('.*unresxrefrpt.*', f)]
+    if len(oclc_report_files) != 1:
+    	unresfile = input('unresxrefrpt file not found. Please supply filename: ')
+    else:
+    	unresfile = str(oclc_report_files[0])
     print('Parsing unresxrefrpt file...')
     unresrept_parse(unresfile)
     print('Building reports for each OCLC symbol...')

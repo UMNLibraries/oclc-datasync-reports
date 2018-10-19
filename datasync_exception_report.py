@@ -1,8 +1,11 @@
 # coding: utf-8
-'''This script parses the OCLC Datasync report file bibdetailexcpt.txt, and writes to an Excel
-Workbook with two worksheets: one for MARC errors unrelated to non-Latin scripts, and one for MARC
-errors apparently related to non-Latin scripts.'''
+'''This script turns the OCLC Datasync exceptions report file bibdetailexcpt.txt 
+into something more useful for subsequent manual processing (Excel). The .txt file
+is parsed based on the content of each error message, and output is written to an Excel
+Workbook with two worksheets: one for MARC errors unrelated to non-Latin scripts, 
+and one for MARC errors apparently related to non-Latin scripts.'''
 
+import os
 import re
 from openpyxl import Workbook
 from datetime import date
@@ -44,7 +47,11 @@ def excpt_rpt_parse(excptfile):
         wb.save(excel_out)
 
 def main():
-    excptfile = input('Exceptions filename: ')
+    flist = [f for f in os.listdir() if re.match('.*bibdetailexcpt.*', f)]
+    if len(flist) != 1:
+        excptfile = input('bibdetailexcpt file not found. Please enter Exceptions filename: ')
+    else:
+        excptfile = str(flist[0])
     excpt_rpt_parse(excptfile)
     print('Exceptions report generated successfully.')
 

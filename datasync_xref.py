@@ -2,11 +2,15 @@
 '''This script creates two files from the OCLC Datasync report file *xrefrept.txt:
 1)a .txt. file of Alma MMS IDS formatted for input to Alma's set creation job; 
 2) a file of brief MARC records from the OCLC Datasync report file *xrefrept.txt 
-to be used as input for Alma import profile Add 035 (OCoLC)* numbers to existing records.'''
+to be used as input for Alma import profile Add 035 (OCoLC)* numbers to existing records.
+NOTE: At present, the outputs of this script must be processed by manually creating a set
+and running two jobs via the Alma UI. An additional script is in development to execute 
+these processes via API.'''
 
 import csv
 import pymarc
 import os
+import re
 from datetime import date
 
 def xref_rpt_parse(xreffile):
@@ -54,7 +58,12 @@ def xref_rpt_parse(xreffile):
 	return(rec_count)
 
 def main():
-	fname = input('File to convert: ')
+	flist = [f for f in os.listdir() if re.match('.*[0-9]\\.xrefrpt.*', f)]
+	if len(flist) != 1: 
+		print('xrefrept file not found')
+		fname = input('File to convert: ')
+	else:
+		fname = str(flist[0])
 	count = xref_rpt_parse(fname)
 	print('Done.', count, 'MARC records in file.')
 

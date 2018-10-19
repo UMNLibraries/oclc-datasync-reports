@@ -1,4 +1,4 @@
-# oclc-datasync
+# oclc-datasync-reports
 OCLC Datasync processing scripts. These scripts take as input the 3 report files generated
 by an OCLC Datasync job: *xrefrpt.txt, *unresxrefrpt.txt, and *bibdetailexcpt.txt. Outputs
 are files to be used for either batch or manual processing of Datasync results in Alma.
@@ -27,3 +27,6 @@ into something more useful for subsequent manual processing (Excel). The .txt fi
 is parsed based on the content of each error message, and output is written to an Excel
 Workbook with two worksheets: one for MARC errors unrelated to non-Latin scripts, 
 and one for MARC errors apparently related to non-Latin scripts.
+
+_This work is copyright (c) the Regents of the University of Minnesota, 2017. 
+It was created and last updated by Stacie Traill, 2018-10-19._

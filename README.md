@@ -22,6 +22,8 @@ Analytics UI and manually downloaded to the working directory; an additional scr
 development that will pull the Alma Analytics data via API.
 
 ## datasync_exception_report.py
-This script parses the OCLC Datasync report file \*bibdetailexcpt.txt, and writes to an Excel
-Workbook with two worksheets: one for MARC errors unrelated to non-Latin scripts, and one for MARC
-errors apparently related to non-Latin scripts.
+This script turns the OCLC Datasync exceptions report file bibdetailexcpt.txt 
+into something more useful for subsequent manual processing (Excel). The .txt file
+is parsed based on the content of each error message, and output is written to an Excel
+Workbook with two worksheets: one for MARC errors unrelated to non-Latin scripts, 
+and one for MARC errors apparently related to non-Latin scripts.

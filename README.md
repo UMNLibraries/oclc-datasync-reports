@@ -36,4 +36,4 @@ Workbook with two worksheets: one for MARC errors unrelated to non-Latin scripts
 and one for MARC errors apparently related to non-Latin scripts.
 
 This work is copyright (c) the Regents of the University of Minnesota, 2017. 
-It was created and last updated by Stacie Traill, 2018-10-19.
+It was created and last updated by Stacie Traill, 2018-10-25.

@@ -49,6 +49,7 @@ def update_bib_ocn(get_bib_response, upd_ocn):
 		rec_tree = bib_tree.find('.record')
 
 		def add_oclc035(rec_tree):
+			#Function to add a new 035 field when conditions are met
 			new035 = etree.Element('datafield', ind1=' ', ind2=' ', tag='035')
 			rec_tree.append(new035)
 			for field in [field for field in rec_tree.xpath(".//datafield[@tag='035']")]:
@@ -61,16 +62,26 @@ def update_bib_ocn(get_bib_response, upd_ocn):
 		oclc = re.compile('.*OCoLC.*')
 		fields = rec_tree.xpath(".//datafield[@tag='035']")
 		if len(fields) == 1:
+			#Check for existing OCLC 035 in a record with 1 035 field and update if exists
 			for subfield_a in [subfield_a for subfield_a in rec_tree.xpath(".//datafield[@tag='035']/subfield[@code='a']") if subfield_a is not None]:
 				if oclc.match(subfield_a.text):
 					subfield_a.text = '(OCoLC)' + upd_ocn
 				else:
 					add_oclc035(rec_tree)
 		elif len(fields) > 1:
+			#Check for existing OCLC 035 in a record with >1 035 field and update if exists
 			for subfield_a in [subfield_a for subfield_a in rec_tree.xpath(".//datafield[@tag='035']/subfield[@code='a']") if oclc.match(subfield_a.text) is not None]:
 				subfield_a.text = '(OCoLC)' + upd_ocn
-	
+			#Get content of all 035a subfields and add new OCLC 035 if none exists
+			subfields = rec_tree.xpath(".//datafield[@tag='035']/subfield[@code='a']")
+			oclc_check_list = []
+			for subfield in subfields:
+				oclc_check_list.append(subfield.text)
+			oclc_check = ' '.join(oclc_check_list)
+			if oclc.match(oclc_check) is None:
+				add_oclc035(rec_tree)
 		else:
+			#Add new OCLC 035 when no 035 exists
 			add_oclc035(rec_tree)
 
 		updated_record = etree.tostring(bib_tree, encoding='utf-8')

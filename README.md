@@ -3,14 +3,23 @@ OCLC Datasync processing scripts. These scripts take as input the 3 report files
 by an OCLC Datasync job: \*xrefrpt.txt, \*unresxrefrpt.txt, and \*bibdetailexcpt.txt. Outputs
 are files to be used for either batch or manual processing of Datasync results in Alma.
 
+## datasync_xref_update.py
+This script updates OCLC numbers in Alma bibliographic records based on the OCLC
+Datasync cross-reference report \*xrefrpt.txt. Based on that file, the script fetches
+each record via the Alma bib API, adds or changes the OCLC number in the MARCXML record, 
+and replaces the Alma bib record with the updated record. It can be used instead of the 
+datasync_xref.py script, which produces files for manual Alma jobs that accomplish the same
+thing.
+
 ## dataysnc_xref.py
 This script creates two files from the OCLC Datasync report file \*xrefrept.txt:
 1)a .txt. file of Alma MMS IDS formatted for input to Alma's set creation job; 
 2) a file of brief MARC records from the OCLC Datasync report file \*xrefrept.txt 
 to be used as input for Alma import profile Add 035 (OCoLC)\* numbers to existing records.
-NOTE: At present, the outputs of this script must be processed by manually creating a set
-and running two jobs via the Alma UI. An additional script is in development to execute 
-these processes via API.
+The outputs of this script must be processed by manually creating a set
+and running two jobs via the Alma UI. Another script in this repo, datasync_xref_update.py,
+processes the xrefrpt file and updates Alma bib records via API. It can be used instead of
+this script.
 
 ## datasync_unres_analytics.py
 This script requires as input the OCLC Datasync unresolved report file \*unresxrefrpt.txt. Based on
@@ -36,4 +45,4 @@ Workbook with two worksheets: one for MARC errors unrelated to non-Latin scripts
 and one for MARC errors apparently related to non-Latin scripts.
 
 This work is copyright (c) the Regents of the University of Minnesota, 2017. 
-It was created and last updated by Stacie Traill, 2018-10-25.
+It was created by Stacie Traill and last updated 2018-10-30.

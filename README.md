@@ -31,13 +31,13 @@ This script fetches predefined deleted holdings reports from Alma Analytics
 for each OCLC symbol managed under UMMBL (MNU, MND, MCR, MNX, MLL), parses the reports, 
 and outputs a CSV file for the OCLC Datasync process.
 
-### Other scripts
+## Other scripts
 
 The two other scripts in this repo produce files for manual processing in Alma and Alma Analytics.
 The scripts above are better/more automated options, but these can be used if more hands-on processing
 is preferred:
 
-## dataysnc_xref.py
+### dataysnc_xref.py
 This script creates two files from the OCLC Datasync report file *xrefrpt.txt:
 1)a .txt. file of Alma MMS IDS formatted for input to Alma's set creation job; 
 2) a file of brief MARC records from the OCLC Datasync report file *xrefrpt.txt 
@@ -47,7 +47,7 @@ and running two jobs via the Alma UI. Another script in this repo, datasync_xref
 processes the xrefrpt file and updates Alma bib records via API. It can be used instead of
 this script.
 
-## datasync_unres.py
+### datasync_unres.py
 This script produces an .xlsx file and a .txt file for each of the 5 University of Minnesota
 OCLC symbols (MNU, MLL, MND, MNX, MCR. Files are to be used for manual processing of records 
 returned as unresolved by OCLC Datasync. Inputs required: OCLC Datasync unresolved 

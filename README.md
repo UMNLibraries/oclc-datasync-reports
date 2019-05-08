@@ -31,7 +31,7 @@ This script fetches predefined deleted holdings reports from Alma Analytics
 for each OCLC symbol managed under UMMBL (MNU, MND, MCR, MNX, MLL), parses the reports, 
 and outputs a CSV file for the OCLC Datasync process.
 
-###Other scripts
+### Other scripts
 
 The two other scripts in this repo produce files for manual processing in Alma and Alma Analytics.
 The scripts above are better/more automated options, but these can be used if more hands-on processing
